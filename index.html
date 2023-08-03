@@ -32,10 +32,16 @@
     let isScanning = false;
 
     async function handleNFCData({message, serialNumber}) {
+        alert('here')
         if (isScanning) {
             isScanning = false; // Pause scanning immediately after a tag is read.
-            const records = message.records.data[0];
-            document.getElementById("scannedData").innerText = JSON.stringify(records);
+            const data = message.records[0].data;
+            const textDecoder = new TextDecoder();
+            const scannedText = textDecoder.decode(data);
+            // Now, you can add the scannedText to your HTML.
+            // For example, you can set the text as the content of a <div> element.
+            alert(scannedText)
+            document.getElementById("scannedData").textContent = scannedText;
             document.getElementById("where").textContent = 'handleNFCData';
             // for (const record of records) {
             //     if (record.recordType === "url") {

@@ -37,6 +37,10 @@
         alert(JSON.stringify(serialNumber))
         // if (isScanning) {
             isScanning = false; // Pause scanning immediately after a tag is read.
+            message.records.forEach(record=>{
+                alert(record)
+                alert(record.data)
+            })
             const data = message.records[0].data;
             const textDecoder = new TextDecoder();
             const scannedText = textDecoder.decode(data);

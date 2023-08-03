@@ -17,7 +17,7 @@
 </head>
 <body>
 <input type="text" id="writeData" placeholder="Enter data to write">
-<button onclick="writeNFC()">Write to NFC</button>
+<!--<button onclick="writeNFC()">Write to NFC</button>-->
 <button onclick="requestNFCPermission()">Scan NFC</button>
 
 <div id="scannedData"></div>
@@ -29,7 +29,7 @@
             const ndef = new NDEFReader();
             await ndef.scan();
             // NFC scanning is now active, wait for a tag to be detected.
-            ndef.addEventListener("reading", ({message, serialNumber}) => {
+            ndef.addEventListener("reading", ({ message, serialNumber }) => {
                 // Handle the scanned data here.
                 const data = message.records[0].data;
                 const textDecoder = new TextDecoder();
@@ -43,25 +43,25 @@
         }
     }
 
-    async function writeNFC() {
-        const dataToWrite = document.getElementById("writeData").value;
-        if (!dataToWrite) {
-            alert("Please enter data to write.");
-            return;
-        }
-        if (!nfcReader) {
-            alert("NFC is not supported in this browser.");
-            return;
-        }
-
-        try {
-            const encoder = new TextEncoder();
-            const ndefRecord = {data: encoder.encode(dataToWrite)};
-            await nfcReader.write(ndefRecord);
-        } catch (error) {
-            console.error("Error while writing NFC:", error);
-        }
-    }
+    // async function writeNFC() {
+    //     const dataToWrite = document.getElementById("writeData").value;
+    //     if (!dataToWrite) {
+    //         alert("Please enter data to write.");
+    //         return;
+    //     }
+    //     if (!nfcReader) {
+    //         alert("NFC is not supported in this browser.");
+    //         return;
+    //     }
+    //
+    //     try {
+    //         const encoder = new TextEncoder();
+    //         const ndefRecord = {data: encoder.encode(dataToWrite)};
+    //         await nfcReader.write(ndefRecord);
+    //     } catch (error) {
+    //         console.error("Error while writing NFC:", error);
+    //     }
+    // }
 
 </script>
 </html>

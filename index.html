@@ -32,7 +32,7 @@
         try {
             const ndef = new NDEFReader();
             await ndef.scan();
-            log("> Scan started");
+            alert("> Scan started");
 
             ndef.addEventListener("readingerror", () => {
                 alert("Argh! Cannot read data from the NFC tag. Try another one?");

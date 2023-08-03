@@ -5,42 +5,28 @@
     <title>Title</title>
 </head>
 <body>
-    <button id="scan">scan</button>
-    <button id="write">write</button>
+<button onclick="requestNFCPermission()">Scan NFC</button>
+<div id="scannedData"></div>
+
 </body>
 <script>
-    scanButton=document.getElementById('scan')
-    writeButton=document.getElementById('write')
-    scanButton.addEventListener("click", async () => {
-        log("User clicked scan button");
-
+    async function requestNFCPermission() {
         try {
             const ndef = new NDEFReader();
             await ndef.scan();
-            console.log("> Scan started");
-
-            ndef.addEventListener("readingerror", () => {
-                console.log("Argh! Cannot read data from the NFC tag. Try another one?");
-            });
-
+            // NFC scanning is now active, wait for a tag to be detected.
             ndef.addEventListener("reading", ({ message, serialNumber }) => {
-                console.log(`> Serial Number: ${serialNumber}`);
-                console.log(`> Records: (${message.records.length})`);
+                // Handle the scanned data here.
+                const data = message.records[0].data;
+                const textDecoder = new TextDecoder();
+                const scannedText = textDecoder.decode(data);
+                // Now, you can add the scannedText to your HTML.
+                // For example, you can set the text as the content of a <div> element.
+                document.getElementById("scannedData").textContent = scannedText;
             });
         } catch (error) {
-            console.log("Argh! " + error);
+            console.error("Error while scanning NFC:", error);
         }
-    });
-    writeButton.addEventListener("click", async () => {
-        console.log("User clicked write button");
-
-        try {
-            const ndef = new NDEFReader();
-            await ndef.write("Hello world!");
-            console.log("> Message written");
-        } catch (error) {
-            console.log("Argh! " + error);
-        }
-    });
+    }
 </script>
 </html>

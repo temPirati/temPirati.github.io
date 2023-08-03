@@ -45,8 +45,9 @@
     async function handleNFCData({message, serialNumber}) {
         if (isScanning) {
             isScanning = false; // Pause scanning immediately after a tag is read.
-            const records = message.records;
+            const records = message.records[0].data;
             document.getElementById("scannedData").innerText = JSON.stringify(records);
+            document.getElementById("where").textContent = 'handleNFCData';
 
             // for (const record of records) {
             //     if (record.recordType === "url") {

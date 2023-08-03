@@ -35,8 +35,8 @@
         try {
             nfcReader = new NDEFReader();
             await nfcReader.scan();
-            nfcReader.addEventListener("reading", handleNFCData);
             isScanning = true;
+            nfcReader.addEventListener("reading", handleNFCData);
         } catch (error) {
             console.error("Error while scanning NFC:", error);
         }

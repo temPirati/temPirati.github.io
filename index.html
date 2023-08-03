@@ -60,6 +60,25 @@
             isScanning = true;
         }
     }
+    async function writeNFC() {
+        const dataToWrite = document.getElementById("writeData").value;
+        if (!dataToWrite) {
+            alert("Please enter data to write.");
+            return;
+        }
+        if (!nfcReader) {
+            alert("NFC is not supported in this browser.");
+            return;
+        }
+
+        try {
+            const encoder = new TextEncoder();
+            const ndefRecord = { data: encoder.encode(dataToWrite) };
+            await nfcReader.write(ndefRecord);
+        } catch (error) {
+            console.error("Error while writing NFC:", error);
+        }
+    }
 
     function pauseScanning() {
         if (isScanning) {

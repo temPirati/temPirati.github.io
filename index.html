@@ -42,40 +42,22 @@
     }
 
     async function handleNFCData({message, serialNumber}) {
+        if (isScanning) {
             document.getElementById("where").textContent = 'handleNFCData';
 
             const data = message.records[0].data;
             const textDecoder = new TextDecoder();
             const scannedText = textDecoder.decode(data);
-            // Now, you can add the scannedText to your HTML.
-            // For example, you can set the text as the content of a <div> element.
             document.getElementById("scannedData").textContent = scannedText;
-            alert('here')
             isScanning = false; // Pause scanning immediately after a tag is read.
-
-            // for (const record of records) {
-            //     if (record.recordType === "url") {
-            //         // Handle URL records differently (e.g., show the URL in the UI without opening it).
-            //         const url = record.url;
-            //         document.getElementById("scannedData").textContent = `URL: ${url}`;
-            //     } else {
-            //         // Handle other record types as before.
-            //         const data = record.data;
-            //         const textDecoder = new TextDecoder();
-            //         const scannedText = textDecoder.decode(data);
-            //         document.getElementById("scannedData").textContent = scannedText;
-            //     }
-            // }
+        }
     }
 
     async function startScanning() {
         if (!isScanning) {
-            await nfcReader.scan();
-            isScanning = true;
-
             nfcReader.addEventListener("reading", handleNFCData);
             document.getElementById("where").textContent = 'start';
-
+            isScanning = true;
         }
     }
 
@@ -84,7 +66,6 @@
             nfcReader.removeEventListener("reading", handleNFCData);
             isScanning = false;
             document.getElementById("where").textContent = 'pauseScanning';
-
         }
     }
 
@@ -95,7 +76,6 @@
         }
         document.getElementById("scannedData").textContent = "";
         document.getElementById("where").textContent = 'resetScanning';
-
     }
 </script>
 </html>

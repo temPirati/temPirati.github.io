@@ -6,7 +6,8 @@
     <style>
         body {
             display: flex;
-            gap: 3rem
+            gap: 3rem;
+            flex-direction: column;
         }
 
         button {
@@ -18,11 +19,13 @@
 <body>
 <input type="text" id="writeData" placeholder="Enter data to write">
 <button onclick="writeNFC()">Write to NFC</button>
+<div>
 <button onclick="startScanning()">Start Scanning NFC</button>
 <button onclick="pauseScanning()">Pause Scanning NFC</button>
 <button onclick="resetScanning()">Reset Scanning NFC</button>
+</div>
 <div id="scannedData"></div>
-
+<div id="where" style="background: red"></div>
 </body>
 <script>
     let nfcReader;
@@ -59,10 +62,13 @@
         }
     }
 
-    function startScanning() {
+    async function startScanning() {
         if (!isScanning) {
+            await nfcReader.scan();
             nfcReader.addEventListener("reading", handleNFCData);
             isScanning = true;
+            document.getElementById("where").textContent = 'start';
+
         }
     }
 
@@ -70,6 +76,8 @@
         if (isScanning) {
             nfcReader.removeEventListener("reading", handleNFCData);
             isScanning = false;
+            document.getElementById("where").textContent = 'pauseScanning';
+
         }
     }
 
@@ -79,6 +87,8 @@
             isScanning = false;
         }
         document.getElementById("scannedData").textContent = "";
+        document.getElementById("where").textContent = 'resetScanning';
+
     }
 </script>
 </html>

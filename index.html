@@ -68,8 +68,9 @@
     async function startScanning() {
         if (!isScanning) {
             await nfcReader.scan();
-            nfcReader.addEventListener("reading", handleNFCData);
             isScanning = true;
+
+            nfcReader.addEventListener("reading", handleNFCData);
             document.getElementById("where").textContent = 'start';
 
         }

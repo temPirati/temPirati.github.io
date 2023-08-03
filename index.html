@@ -33,7 +33,7 @@
 
     async function handleNFCData({message, serialNumber}) {
         alert(isScanning)
-        alert(message)
+        alert(JSON.stringify(message))
         if (isScanning) {
             isScanning = false; // Pause scanning immediately after a tag is read.
             const data = message.records[0].data;
@@ -82,8 +82,8 @@
 
     async function startScanning() {
         await nfcReader.scan();
-        nfcReader.addEventListener("reading", handleNFCData);
         isScanning = true;
+        nfcReader.addEventListener("reading", handleNFCData);
         document.getElementById("where").textContent = 'start';
 
     }

@@ -34,7 +34,8 @@
     async function handleNFCData({message, serialNumber}) {
         alert(isScanning)
         alert(JSON.stringify(message))
-        if (isScanning) {
+        alert(JSON.stringify(serialNumber))
+        // if (isScanning) {
             isScanning = false; // Pause scanning immediately after a tag is read.
             const data = message.records[0].data;
             const textDecoder = new TextDecoder();
@@ -57,7 +58,7 @@
             //         document.getElementById("scannedData").textContent = scannedText;
             //     }
             // }
-        }
+        // }
     }
 
     async function writeNFC() {

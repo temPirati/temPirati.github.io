@@ -17,92 +17,52 @@
     </style>
 </head>
 <body>
-<input type="text" id="writeData" placeholder="Enter data to write">
-<button onclick="writeNFC()">Write to NFC</button>
 <div>
-    <button onclick="startScanning()">Start Scanning NFC</button>
-    <button onclick="pauseScanning()">Pause Scanning NFC</button>
-    <button onclick="resetScanning()">Reset Scanning NFC</button>
+    <button onclick="read()">read</button>
+    <button onclick="write()">write</button>
+    <!--    <button onclick="startScanning()">readonly</button>-->
+
+
 </div>
 <div id="scannedData"></div>
 <div id="where" style="background: red"></div>
 </body>
 <script>
-    let nfcReader = new NDEFReader();
-    let isScanning = false;
+    async function read() {
+        try {
+            const ndef = new NDEFReader();
+            await ndef.scan();
+            log("> Scan started");
 
-    async function handleNFCData({message, serialNumber}) {
-        alert(isScanning)
-        alert(JSON.stringify(message))
-        alert(JSON.stringify(serialNumber))
-        // if (isScanning) {
-        isScanning = false; // Pause scanning immediately after a tag is read.
-        message.records.forEach(record => {
-            let data = record.data;
-            let textDecoder = new TextDecoder();
-            let scannedText = textDecoder.decode(data);
-            // Now, you can add the scannedText to your HTML.
-            // For example, you can set the text as the content of a <div> element.
-            alert(scannedText)
-        })
-        document.getElementById("scannedData").textContent = scannedText;
-        document.getElementById("where").textContent = 'handleNFCData';
-        // for (const record of records) {
-        //     if (record.recordType === "url") {
-        //         // Handle URL records differently (e.g., show the URL in the UI without opening it).
-        //         const url = record.url;
-        //         document.getElementById("scannedData").textContent = `URL: ${url}`;
-        //     } else {
-        //         // Handle other record types as before.
-        //         const data = record.data;
-        //         const textDecoder = new TextDecoder();
-        //         const scannedText = textDecoder.decode(data);
-        //         document.getElementById("scannedData").textContent = scannedText;
-        //     }
-        // }
-        // }
+            ndef.addEventListener("readingerror", () => {
+                alert("Argh! Cannot read data from the NFC tag. Try another one?");
+            });
+
+            ndef.addEventListener("reading", ({message, serialNumber}) => {
+                alert(`> Serial Number: ${serialNumber}`);
+                message.records.forEach(record => {
+                    let data = record.data;
+                    let textDecoder = new TextDecoder();
+                    let scannedText = textDecoder.decode(data);
+                    alert(scannedText)
+                })
+            });
+        } catch (error) {
+            alert("Argh! " + error);
+        }
     }
 
-    async function writeNFC() {
-        const dataToWrite = document.getElementById("writeData").value;
-        if (!dataToWrite) {
-            alert("Please enter data to write.");
-            return;
-        }
-        if (!nfcReader) {
-            alert("NFC is not supported in this browser.");
-            return;
-        }
+    async function write() {
+        alert("User clicked write button");
 
         try {
-            const encoder = new TextEncoder();
-            const ndefRecord = {data: encoder.encode(dataToWrite)};
-            await nfcReader.write(ndefRecord);
+            const ndef = new NDEFReader();
+            await ndef.write("12222222");
+            alert("> Message written");
         } catch (error) {
-            console.error("Error while writing NFC:", error);
+            alert("Argh! " + error);
         }
     }
 
-    async function startScanning() {
-        await nfcReader.scan();
-        isScanning = true;
-        nfcReader.addEventListener("reading", handleNFCData);
-        document.getElementById("where").textContent = 'start';
-
-    }
-
-    function pauseScanning() {
-        nfcReader.removeEventListener("reading", handleNFCData);
-        isScanning = false;
-        document.getElementById("where").textContent = 'pauseScanning';
-    }
-
-    function resetScanning() {
-        nfcReader.removeEventListener("reading", handleNFCData);
-        isScanning = false;
-        document.getElementById("scannedData").textContent = "";
-        document.getElementById("where").textContent = 'resetScanning';
-
-    }
 </script>
 </html>

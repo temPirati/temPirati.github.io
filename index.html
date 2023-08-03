@@ -29,13 +29,12 @@
 </body>
 <script>
     let nfcReader;
-    let isScanning = false;
+    let isScanning = true;
 
     async function requestNFCPermission() {
         try {
             nfcReader = new NDEFReader();
             await nfcReader.scan();
-            isScanning = true;
             nfcReader.addEventListener("reading", handleNFCData);
         } catch (error) {
             console.error("Error while scanning NFC:", error);
@@ -48,7 +47,7 @@
             const records = message.records[0].data;
             document.getElementById("scannedData").innerText = JSON.stringify(records);
             document.getElementById("where").textContent = 'handleNFCData';
-
+            alert('here')
             // for (const record of records) {
             //     if (record.recordType === "url") {
             //         // Handle URL records differently (e.g., show the URL in the UI without opening it).

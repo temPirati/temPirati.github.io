@@ -20,9 +20,9 @@
 <input type="text" id="writeData" placeholder="Enter data to write">
 <button onclick="writeNFC()">Write to NFC</button>
 <div>
-<button onclick="startScanning()">Start Scanning NFC</button>
-<button onclick="pauseScanning()">Pause Scanning NFC</button>
-<button onclick="resetScanning()">Reset Scanning NFC</button>
+    <button onclick="startScanning()">Start Scanning NFC</button>
+    <button onclick="pauseScanning()">Pause Scanning NFC</button>
+    <button onclick="resetScanning()">Reset Scanning NFC</button>
 </div>
 <div id="scannedData"></div>
 <div id="where" style="background: red"></div>
@@ -42,23 +42,25 @@
         }
     }
 
-    async function handleNFCData({ message }) {
+    async function handleNFCData({message, serialNumber}) {
         if (isScanning) {
             isScanning = false; // Pause scanning immediately after a tag is read.
             const records = message.records;
-            for (const record of records) {
-                if (record.recordType === "url") {
-                    // Handle URL records differently (e.g., show the URL in the UI without opening it).
-                    const url = record.url;
-                    document.getElementById("scannedData").textContent = `URL: ${url}`;
-                } else {
-                    // Handle other record types as before.
-                    const data = record.data;
-                    const textDecoder = new TextDecoder();
-                    const scannedText = textDecoder.decode(data);
-                    document.getElementById("scannedData").textContent = scannedText;
-                }
-            }
+            document.getElementById("scannedData").innerText = JSON.stringify(records);
+
+            // for (const record of records) {
+            //     if (record.recordType === "url") {
+            //         // Handle URL records differently (e.g., show the URL in the UI without opening it).
+            //         const url = record.url;
+            //         document.getElementById("scannedData").textContent = `URL: ${url}`;
+            //     } else {
+            //         // Handle other record types as before.
+            //         const data = record.data;
+            //         const textDecoder = new TextDecoder();
+            //         const scannedText = textDecoder.decode(data);
+            //         document.getElementById("scannedData").textContent = scannedText;
+            //     }
+            // }
         }
     }
 

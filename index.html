@@ -32,7 +32,8 @@
     let isScanning = false;
 
     async function handleNFCData({message, serialNumber}) {
-        alert('here')
+        alert(isScanning)
+        alert(message)
         if (isScanning) {
             isScanning = false; // Pause scanning immediately after a tag is read.
             const data = message.records[0].data;

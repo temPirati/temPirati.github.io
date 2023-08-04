@@ -48,7 +48,7 @@
                     alert(scannedText)
                     if (scannedText.includes('tag_id')){
                         let jsonData = JSON.parse(scannedText);
-                        alert(`id: ${JSON.stringify(jsonData)}`)
+                        alert(`id: ${jsonData['tag_id']}`)
                     }
                 })
             });

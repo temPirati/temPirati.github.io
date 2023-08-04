@@ -46,10 +46,10 @@
                     let scannedText = textDecoder.decode(data);
                     alert(typeof scannedText)
                     alert(scannedText)
-                    // if (scannedText.includes('tag_id')){
-                    //     let jsonData = JSON.parse(scannedText);
-                    //     alert(`id: ${jsonData.tag_id}`)
-                    // }
+                    if (scannedText.includes('tag_id')){
+                        let jsonData = JSON.parse(scannedText);
+                        alert(`id: ${JSON.stringify(jsonData)}`)
+                    }
                 })
             });
         } catch (error) {

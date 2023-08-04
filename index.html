@@ -48,7 +48,7 @@
                     alert(scannedText)
                     alert(scannedText.includes('tag_id'))
                     try {
-                        let jsonData = JSON.parse(scannedText);
+                        let jsonData = JSON.parse(JSON.stringify(scannedText));
                         alert(jsonData)
                         alert(`id: ${jsonData['tag_id']}`)
                     } catch (error) {

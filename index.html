@@ -44,6 +44,7 @@
                     let data = record.data;
                     let textDecoder = new TextDecoder();
                     let scannedText = textDecoder.decode(data);
+                    alert(typeof scannedText)
                     alert(scannedText)
                     // if (scannedText.includes('tag_id')){
                     //     let jsonData = JSON.parse(scannedText);

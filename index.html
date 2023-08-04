@@ -50,7 +50,7 @@
                     try {
                         let jsonData = JSON.parse(JSON.stringify(scannedText));
                         alert(jsonData)
-                        alert(`id: ${jsonData['tag_id']}`)
+                        alert(`id: ${jsonData.tag_id}`)
                     } catch (error) {
                         alert("Argh! " + error);
                     }

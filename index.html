@@ -41,8 +41,6 @@
             ndef.addEventListener("reading", ({message, serialNumber}) => {
                 alert(`> Serial Number: ${serialNumber}`);
                 message.records.forEach(record => {
-                    alert(`1:${record.toRecords()}`)
-                    alert(`2:${record.recordType}`)
                     let data = record.data;
                     let textDecoder = new TextDecoder();
                     let scannedText = textDecoder.decode(data);

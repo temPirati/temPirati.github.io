@@ -48,7 +48,7 @@
                     alert(scannedText)
                     alert(scannedText.includes('tag_id'))
                     try {
-                        let jsonData = JSON.parse(JSON.stringify(scannedText));
+                        let jsonData = JSON.parse(atob(scannedText));
                         alert(jsonData)
                         alert(typeof jsonData)
                         alert(Object.keys(jsonData))

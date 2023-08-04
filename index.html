@@ -44,7 +44,9 @@
                     let data = record.data;
                     let textDecoder = new TextDecoder();
                     let scannedText = textDecoder.decode(data);
-                    alert(JSON.parse(scannedText))
+                    let jsonData = JSON.parse(scannedText);
+                    alert(jsonData.key)
+                    alert(jsonData.value)
                 })
             });
         } catch (error) {
